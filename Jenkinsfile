@@ -1,7 +1,5 @@
 pipeline {
-
     agent any
-
     stages {
 
         stage("Building docker image") {
@@ -9,8 +7,10 @@ pipeline {
             steps {
 
                 echo "Building docker image ..."
-                sh 'docker build ./api/'
-                sh 'docker build ./web/'
+                sh 'docker build ./api/ -t jenkinscontainer1.azurecr.io/api-img:1.0'
+                sh 'docker build ./web/ -t jenkinscontainer1.azurecr.io/web-img:1.0'
+
+                sh 'docker images'
 
             }
 
@@ -21,7 +21,8 @@ pipeline {
             steps {
 
                 echo "Pushing docker image ..."
-
+                sh 'docker push jenkinscontainer1.azurecr.io/api-img:1.0'
+                sh 'docker push jenkinscontainer1.azurecr.io/web-img:1.0'
             }
 
         }
