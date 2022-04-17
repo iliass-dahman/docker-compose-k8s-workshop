@@ -25,16 +25,11 @@ pipeline {
                         usernamePassword(credentialsId: 'IDCONTTT',
                         usernameVariable: 'username',
                         passwordVariable: 'password')
-                    ]){
-                        print 'username=' + username + 'password=' + password
-
-                        print 'username.collect { it }=' + username.collect { it }
-                        print 'password.collect { it }=' + password.collect { it }
-                    }
+                    ])
                 }
 
                 echo "Pushing docker image ..."
-                sh 'docker login jenkinscontainer1 -p $MY_KUBECONFIG.'
+                sh 'docker login $username -p $password'
                 sh 'docker push jenkinscontainer1.azurecr.io/api-img:1.0'
                 sh 'docker push jenkinscontainer1.azurecr.io/web-img:1.0'
             }
