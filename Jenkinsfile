@@ -1,4 +1,7 @@
 pipeline {
+    environment {
+        MY_KUBECONFIG = credentials('IDCONTTT')
+    }
     agent any
     stages {
 
@@ -21,6 +24,7 @@ pipeline {
             steps {
 
                 echo "Pushing docker image ..."
+                sh 'docker login jenkinscontainer1'
                 sh 'docker push jenkinscontainer1.azurecr.io/api-img:1.0'
                 sh 'docker push jenkinscontainer1.azurecr.io/web-img:1.0'
             }
