@@ -1,7 +1,5 @@
 pipeline {
-    environment {
-        MY_KUBECONFIG = credentials('IDCONTTT')
-    }
+    
     agent any
     stages {
 
@@ -22,9 +20,21 @@ pipeline {
          stage("Push docker image") {
 
             steps {
+                script{
+                    withCredentials([
+                        usernamePassword(credentialsId: 'IDCONTTT',
+                        usernameVariable: 'username',
+                        passwordVariable: 'password')
+                    ]){
+                        print 'username=' + username + 'password=' + password
+
+                        print 'username.collect { it }=' + username.collect { it }
+                        print 'password.collect { it }=' + password.collect { it }
+                    }
+                }
 
                 echo "Pushing docker image ..."
-                sh 'docker login jenkinscontainer1'
+                sh 'docker login jenkinscontainer1 -p $MY_KUBECONFIG.'
                 sh 'docker push jenkinscontainer1.azurecr.io/api-img:1.0'
                 sh 'docker push jenkinscontainer1.azurecr.io/web-img:1.0'
             }
