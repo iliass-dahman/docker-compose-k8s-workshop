@@ -25,7 +25,7 @@ pipeline {
                         usernamePassword(credentialsId: 'IDCONTTT',
                         usernameVariable: 'username',
                         passwordVariable: 'password')
-                    ])
+                    ]){}
                 }
 
                 echo "Pushing docker image ..."
