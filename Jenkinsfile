@@ -9,7 +9,8 @@ pipeline {
             steps {
 
                 echo "Building docker image ..."
-                sh 'docker -v'
+                sh 'docker build ./api/'
+                sh 'docker build ./web/'
 
             }
 
