@@ -25,11 +25,13 @@ pipeline {
                         usernamePassword(credentialsId: 'IDCONTTT',
                         usernameVariable: 'username',
                         passwordVariable: 'password')
-                    ]){}
+                    ]){
+                        sh 'docker login -u $username -p $password'
+                    }
                 }
 
                 echo "Pushing docker image ..."
-                sh 'docker login -u $username -p $password'
+                
                 sh 'docker push jenkinscontainer1.azurecr.io/api-img:1.0'
                 sh 'docker push jenkinscontainer1.azurecr.io/web-img:1.0'
             }
