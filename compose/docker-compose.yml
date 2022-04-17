@@ -1,0 +1,20 @@
+version: '3.7'
+
+services:
+  db:
+    build: ../../db
+    image: iliass/workshop-db
+    ports:
+      - 5452:5452
+  api:
+    build: ../../api
+    image: iliass/workshop-api
+    ports:
+      - 8080:8080
+    depends_on:
+      - db
+  web:
+    build: ../../web
+    image: iliass/workshop-web
+    ports:
+      - 9191:80
